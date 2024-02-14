@@ -1,0 +1,268 @@
+@prefix hmo: <https://w3id.org/hmo#> .
+@prefix bot: <https://w3id.org/bot#> .
+@prefix dot: <https://w3id.org/dot#> .
+@prefix beo: <https://pi.pauwel.be/voc/buildingelement#> .
+@prefix mat: <http://bimerr.iot.linkeddata.es/def/material-properties#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix brot: <https://wisib.de/ontologie/brot#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix schema: <http://schema.org/#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://w3id.org/hmo#hasLayer
+hmo:hasLayer rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:isLayerOf ;
+                          rdfs:domain hmo:MasonryWall ;
+                          rdfs:range hmo:MasonryLayer ;
+                          rdfs:comment  "Defines the relationship between a masonry wall and a masonry layer."@en ;
+                          rdfs:label    "has layer"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#isLayerOf
+hmo:isLayerOf rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:hasLayer ;
+                          rdfs:domain hmo:MasonryLayer ;
+                          rdfs:range hmo:MasonryWall ;
+                          rdfs:comment  "Defines the relationship between a masonry wall and a masonry layer."@en ;
+                          rdfs:label    "is Layer of"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#hasHomogeneisedMechanicalProperty
+hmo:hasHomogeneisedMechanicalProperty rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:isHomogeneisedMechanicalPropertyOf ;
+                          rdfs:domain hmo:MasonryWall ;
+                          rdfs:range hmo:HomogeneisedMechanicalProperty ;
+                          rdfs:comment  "Defines the relationship between a Masonry Wall and an Homogeneised Mechanical Property."@en ;
+                          rdfs:label    "has Homogeneised Mechanical Property"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#isHomogeneisedMechanicalPropertyOf
+hmo:isHomogeneisedMechanicalPropertyOf rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:hasHomogeneisedMechanicalProperty ;
+                          rdfs:domain hmo:HomogeneisedMechanicalProperty ;
+                          rdfs:range hmo:MasonryWall ;
+                          rdfs:comment  "Defines the relationship between an Homogeneised Mechanical Property and a Masonry Wall."@en ;
+                          rdfs:label    "is Homogeneised Mechanical Property of"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#hasPattern
+hmo:hasPattern rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:isPatternOf ;
+                          rdfs:domain hmo:MasonryLayer ;
+                          rdfs:range hmo:Pattern ;
+                          rdfs:comment  "Defines the relationship between a Masonry Layer and a Pattern."@en ;
+                          rdfs:label    "has Pattern"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#isPatternOf
+hmo:isPatternOf rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:hasPattern ;
+                          rdfs:domain hmo:Pattern ;
+                          rdfs:range hmo:MasonryLayer ;
+                          rdfs:comment  "Defines the relationship between a Pattern and a Masonry Layer."@en ;
+                          rdfs:label    "is Pattern of"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#hasPatternEntity
+hmo:hasPatternEntity rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:isPatternEntityOf ;
+                          rdfs:domain hmo:Pattern ;
+                          rdfs:range hmo:PatternEntity ;
+                          rdfs:comment  "Defines the relationship between a Pattern and a PatternEntity."@en ;
+                          rdfs:label    "has PatternEntity"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#isPatternEntityOf
+hmo:isPatternEntityOf rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:hasPatternEntity ;
+                          rdfs:domain hmo:PatternEntity ;
+                          rdfs:range hmo:Pattern ;
+                          rdfs:comment  "Defines the relationship between a PatternEntity and a Pattern."@en ;
+                          rdfs:label    "is Pattern Entity of"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#hasInterfaceElements
+hmo:hasInterfaceElements rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:areInterfaceElementsOf ;
+                          rdfs:domain hmo:Units ;
+                          rdfs:range hmo:Joints ;
+                          rdfs:comment  "Defines the relationship between Units and a Joints in a Pattern."@en ;
+                          rdfs:label    "has Interface Elements"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#areInterfaceElementsOf
+hmo:areInterfaceElementsOf rdf:type owl:ObjectProperty ;
+                      owl:inverseOf hmo:hasInterfaceElements ;
+                          rdfs:domain hmo:Joints ;
+                          rdfs:range hmo:Units ;
+                          rdfs:comment  "Defines the relationship between Joints and Units in a Pattern."@en ;
+                          rdfs:label    "are Interface Elements of"@en ;
+						rdfs:isDefinedBy hmo: .
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://w3id.org/hmo#heigthHasMinimumValue
+hmo:heigthMinimumValue rdf:type owl:DatatypeProperty ;
+                          rdfs:domain hmo:Units ;
+                          rdfs:range xsd:float ;
+                          rdfs:comment  "Defines the minimum value of the height of the units in the pattern. "@en ;
+                          rdfs:label    "Height Has Minimum Value"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#heightHasMaximumValue
+hmo:heightMaximumValue rdf:type owl:DatatypeProperty ;
+                          rdfs:domain hmo:Units ;
+                          rdfs:range xsd:float ;
+                          rdfs:comment  "Defines the maximum value of the height of the units in the pattern. "@en ;
+                          rdfs:label    "Height Has Maximum Value"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#lengthHasMinimumValue
+hmo:lengthMinimumValue rdf:type owl:DatatypeProperty ;
+                          rdfs:domain hmo:Units ;
+                          rdfs:range xsd:float ;
+                          rdfs:comment  "Defines the minimum value of the length of the units in the pattern. "@en ;
+                          rdfs:label    "Length Has Minimum Value"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#lengthHasMaximumValue
+hmo:lengthMaximumValue rdf:type owl:DatatypeProperty ;
+                          rdfs:domain hmo:Units ;
+                          rdfs:range xsd:float ;
+                          rdfs:comment  "Defines the maximum value of the length of the units in the pattern. "@en ;
+                          rdfs:label    "Length Has Maximum Value"@en ;
+						rdfs:isDefinedBy hmo: .
+
+###  https://w3id.org/hmo#unitsHaveShape
+hmo:unitsHaveShape rdf:type owl:DatatypeProperty ;
+                          rdfs:domain hmo:Units ;
+                          rdfs:range xsd:string ;
+                          rdfs:comment  "Defines the average shape of the units. "@en ;
+                          rdfs:label    "Units Have Shape"@en ;
+						rdfs:isDefinedBy hmo: .
+
+### Length has Shape / restrictions 
+[
+    rdf:type owl:Restriction ;
+    owl:onProperty hmo:unitsHaveShape ;
+    owl:hasValue "round"^^xsd:string 
+] .
+
+[
+    rdf:type owl:Restriction ;
+    owl:onProperty hmo:unitsHaveShape ;
+    owl:hasValue "regular"^^xsd:string 
+] .
+
+[
+    rdf:type owl:Restriction ;
+    owl:onProperty hmo:unitsHaveShape ;
+    owl:hasValue "mixed"^^xsd:string 
+] .
+
+#################################################################
+#    Classes
+#################################################################
+
+
+###  https://w3id.org/hmo:MasonryWall
+hmo:MasonryWall rdf:type owl:Class ;
+			  rdfs:subClassOf beo:Wall ;
+			  owl:disjointWith hmo:MasonryLayer ;
+			  owl:disjointWith hmo:Pattern ;
+			  owl:disjointWith hmo:PatternEntity ;
+			  owl:disjointWith hmo:HomogeneisedMechanicalProperty ;
+			  owl:disjointWith hmo:Source ;
+
+              rdfs:comment """A wall made of masonry"""@en ;
+			  rdfs:isDefinedBy hmo: ;
+              rdfs:label "Masonry Wall"@en .
+
+###  https://w3id.org/hmo:MasonryLayer
+hmo:MasonryLayer rdf:type owl:Class ;
+			  owl:disjointWith hmo:MasonryWall ;
+			  owl:disjointWith hmo:Pattern ;
+			  owl:disjointWith hmo:PatternEntity ;
+			  owl:disjointWith hmo:HomogeneisedMechanicalProperty ;
+			  owl:disjointWith hmo:Source ;
+
+              rdfs:comment """A layer of a masonry wall"""@en ;
+			  rdfs:isDefinedBy hmo: ;
+              rdfs:label "Masonry Layer"@en .
+
+###  https://w3id.org/hmo:Pattern
+hmo:Pattern rdf:type owl:Class ;
+			  owl:disjointWith hmo:MasonryWall ;
+			  owl:disjointWith hmo:MasonryLayer ;
+			  owl:disjointWith hmo:PatternEntity ;
+			  owl:disjointWith hmo:HomogeneisedMechanicalProperty ;
+			  owl:disjointWith hmo:Source ;
+
+              rdfs:comment """A pattern in a masonry layer"""@en ;
+			  rdfs:isDefinedBy hmo: ;
+              rdfs:label "Pattern"@en .
+
+###  https://w3id.org/hmo:PatternEntity
+hmo:PatternEntity rdf:type owl:Class ;
+			  owl:disjointWith hmo:MasonryWall ;
+			  owl:disjointWith hmo:MasonryLayer ;
+			  owl:disjointWith hmo:Pattern ;
+			  owl:disjointWith hmo:HomogeneisedMechanicalProperty ;
+			  owl:disjointWith hmo:Source ;
+
+              rdfs:comment """A pattern entity in a pattern"""@en ;
+			  rdfs:isDefinedBy hmo: ;
+              rdfs:label "Pattern entity"@en .
+
+###  https://w3id.org/hmo:Units
+hmo:Units rdf:type owl:Class ;
+			  rdfs:subClassOf hmo:PatternEntity ;
+			  owl:disjointWith hmo:MasonryWall ;
+			  owl:disjointWith hmo:MasonryLayer ;
+			  owl:disjointWith hmo:Pattern ;
+			  owl:disjointWith hmo:HomogeneisedMechanicalProperty ;
+			  owl:disjointWith hmo:Source ;
+			  owl:disjointWith hmo:Joints ;
+
+              rdfs:comment """A unit configuration (units) in a pattern"""@en ;
+			  rdfs:isDefinedBy hmo: ;
+              rdfs:label "Units"@en .
+
+###  https://w3id.org/hmo:Joints
+hmo:Joints rdf:type owl:Class ;
+			  rdfs:subClassOf hmo:PatternEntity ;
+			  owl:disjointWith hmo:MasonryWall ;
+			  owl:disjointWith hmo:MasonryLayer ;
+			  owl:disjointWith hmo:Pattern ;
+			  owl:disjointWith hmo:HomogeneisedMechanicalProperty ;
+			  owl:disjointWith hmo:Source ;
+			  owl:disjointWith hmo:Units ;
+
+              rdfs:comment """The configuration of the joints in the pattern"""@en ;
+			  rdfs:isDefinedBy hmo: ;
+              rdfs:label "Joints"@en .
+
+###  https://w3id.org/hmo:HomogeneisedMechanicalProperty
+hmo:HomogeneisedMechanicalProperty rdf:type owl:Class ;
+			  rdfs:subClassOf mat:Property ;
+			  owl:disjointWith hmo:MasonryWall ;
+			  owl:disjointWith hmo:MasonryLayer ;
+			  owl:disjointWith hmo:Pattern ;
+			  owl:disjointWith hmo:PatternEntity;
+			  owl:disjointWith hmo:Source ;
+			  owl:disjointWith hmo:Units ;
+
+              rdfs:comment """The configuration of the joints in the pattern"""@en ;
+			  rdfs:isDefinedBy hmo: ;
+              rdfs:label "Joints"@en .
