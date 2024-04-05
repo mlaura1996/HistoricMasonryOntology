@@ -5,7 +5,7 @@
 
 ## Authors
 
-This ontology was developed by ISISE - University of Minho in collaboration with the Italian National Research Centre (CNR). 
+This ontology was developed by ISISE - University of Minho in collaboration with the Italian National Research Centre (CNR).
 
 - Maria Laura Leonardi, ISISE
 - Stefano Cursi, CNR
