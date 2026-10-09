@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased — SWRL rules made executable
+## 0.2 (2026-10-09) — SWRL rules made executable
+
+Version metadata: `owl:versionInfo` 0.2, `owl:versionIRI` <https://w3id.org/hmo/0.2>,
+`owl:priorVersion` <https://w3id.org/hmo/0.1>, `dcterms:modified` 2026-10-09.
 
 The SWRL rules as previously published could not be executed by a reasoner.
 Run with Pellet on four masonry walls (the Castelnuovo di Porto case
