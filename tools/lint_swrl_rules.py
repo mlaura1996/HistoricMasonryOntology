@@ -61,7 +61,10 @@ for r in sorted(g.subjects(RDF.type, u('Imp')), key=lambda r: str(g.value(r, RDF
     for v in allv: low[v.lower()].add(v)
     for k, vs in low.items():
         if len(vs) > 1: problems.append('variabili che differiscono solo per maiuscole: ' + ', '.join(sorted(vs)))
-    used = [a for k, _, args in body if k == 'builtin' for a in args[1:] if isvar(a)]
+    # a binding built-in (add, divide...) uses its arguments after the first;
+    # a test built-in (lessThan...) uses all of them, the first included
+    used = [a for k, pred, args in body if k == 'builtin'
+            for a in (args[1:] if short(pred) in BIND else args) if isvar(a)]
     for kind, pred, args in body:
         if kind == 'builtin' and short(pred) in BIND and args and isvar(args[0]):
             out = args[0]

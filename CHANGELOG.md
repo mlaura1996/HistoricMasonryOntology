@@ -51,6 +51,13 @@ information is lost.
 - **F7**: `NoHeaders` and `MQI_WC_NoHeaders`, the absence of transverse
   connection (score 0) for masonry that is not rubble stone; before, it was
   only reachable through the `RubbleStones` constant.
+- **F9**: `IrregularHardstone` and `MQI_SM_IrregularHardStone`, the
+  unit-material score (1) for hard stone that is not squared. The score
+  existed only through the `SquaredHardstone` constant, which also sets a
+  squared unit shape, so irregular or roughly cut hard stone (the sandstone
+  of the SERA-AIMS benchmark) could not be scored without contradicting its
+  shape. The constant sets the material only; the shape is given by its own
+  pattern entity.
 
 ### Evidence
 
@@ -65,6 +72,7 @@ Removing one correction at a time and running Pellet again:
 | F5 | inconsistent |
 | F6 | 4 values missing |
 | F7 | 4 values missing |
+| F9 | SERA-AIMS masonry: no quality index derived, so no values |
 | F8 | inconsistent |
 
 With all corrections, Pellet derives one value per property for every wall,
@@ -76,6 +84,8 @@ rules.
 - `tools/fix_swrl_rules.py` applies the corrections to `ontology.ttl`
   (each switchable with `--only`).
 - `tools/lint_swrl_rules.py` checks every rule for unbound variables,
-  built-in arity and variables differing only by case.
+  built-in arity and variables differing only by case. A comparison
+  built-in (`lessThan`...) now counts its first argument as used, which
+  removes three false reports on the unit-dimension rules.
 - `tools/check_rules_with_pellet.py` runs the rules with Pellet on the four
   example walls. Needs Java and `owlready2==0.48`.

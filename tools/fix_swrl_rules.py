@@ -25,6 +25,12 @@ Extensions (vocabulary the case study needs and the ontology lacks):
   F7  NoHeaders and MQI_WC_NoHeaders: absence of transverse connection for
       masonry that is not rubble, previously only expressible through the
       rubble-stone constant.
+  F9  IrregularHardstone and MQI_SM_IrregularHardStone: unit material score
+      for hard stone that is not squared. The hard-stone score was reachable
+      only through SquaredHardstone, which also sets a squared unit shape,
+      so irregular or roughly cut hard stone (the SERA-AIMS sandstone)
+      could not be scored without contradicting its shape. Material only:
+      the shape is given by its own constant (RoughlyCutStone, RubbleStones).
 """
 import sys
 import rdflib
@@ -222,6 +228,19 @@ if on("F7"):
     clone_rule("MQI_WC_RubbleStones", "MQI_WC_NoHeaders", h("RubbleStones"), h("NoHeaders"),
                "Wall leaves connection score when no headers are present and the masonry is not rubble stone.")
     log.append(f"F7 added NoHeaders ({str(cls).split('#')[-1]}) and MQI_WC_NoHeaders (0, 0, 0)")
+
+if on("F9"):
+    g.add((h("IrregularHardstone"), RDF.type, OWL.NamedIndividual))
+    g.add((h("IrregularHardstone"), RDF.type, h("Units")))
+    g.add((h("IrregularHardstone"), RDFS.label, Literal("Irregular hardstone", lang="en")))
+    g.add((h("IrregularHardstone"), RDFS.comment, Literal(
+        "Hard stone units that are not squared (irregular or roughly cut), such as limestone or sandstone "
+        "rubble. Sets the unit material only; the unit shape is given by its own pattern entity.", lang="en")))
+    clone_rule("MQI_SM_SquaredHardStone", "MQI_SM_IrregularHardStone",
+               h("SquaredHardstone"), h("IrregularHardstone"),
+               "Unit material score for hard stone that is not squared: the same score as squared hard stone, "
+               "since the unit material score depends on the material, not on the shape.")
+    log.append("F9 added IrregularHardstone and MQI_SM_IrregularHardStone (unit material 1 for hard stone)")
 
 g.serialize(dst, format="turtle", encoding="utf-8")
 print("\n".join(log))
