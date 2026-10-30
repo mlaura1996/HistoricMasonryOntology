@@ -31,6 +31,12 @@ Extensions (vocabulary the case study needs and the ontology lacks):
       so irregular or roughly cut hard stone (the SERA-AIMS sandstone)
       could not be scored without contradicting its shape. Material only:
       the shape is given by its own constant (RoughlyCutStone, RubbleStones).
+  F10 MQI_SS_IrregularSoftstones removed: IrregularSoftstone set a unit shape
+      as well as the material, so rubble of soft stone received two shape
+      scores and two values of the index. It now sets the material only, as
+      IrregularHardstone does, and the shape is given by its own constant.
+  F11 MQI_MM_DryJoints: mortar quality score of zero for dry joints, which
+      had no mortar rule, so that masonry with dry joints had no index.
 """
 import sys
 import rdflib
@@ -241,6 +247,22 @@ if on("F9"):
                "Unit material score for hard stone that is not squared: the same score as squared hard stone, "
                "since the unit material score depends on the material, not on the shape.")
     log.append("F9 added IrregularHardstone and MQI_SM_IrregularHardStone (unit material 1 for hard stone)")
+
+if on("F10"):
+    r = rule("MQI_SS_IrregularSoftstones")
+    todo = [r]
+    while todo:
+        n = todo.pop()
+        for _, _, o in g.triples((n, None, None)):
+            if isinstance(o, BNode):
+                todo.append(o)
+        g.remove((n, None, None))
+    log.append("F10 removed MQI_SS_IrregularSoftstones (IrregularSoftstone sets the unit material only)")
+
+if on("F11"):
+    clone_rule("MQI_MM_EarthMortarJoints", "MQI_MM_DryJoints", h("EarthMortarJoints"), h("DryJoints"),
+               "Mortar quality score for dry joints: zero, since there is no mortar.")
+    log.append("F11 added MQI_MM_DryJoints (mortar quality 0, 0, 0)")
 
 g.serialize(dst, format="turtle", encoding="utf-8")
 print("\n".join(log))

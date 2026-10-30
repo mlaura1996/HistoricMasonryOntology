@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.3 (2026-10-30) - unit material and dry joints
+
+Version metadata: `owl:versionInfo` 0.3, `owl:versionIRI` <https://w3id.org/hmo/0.3>,
+`owl:priorVersion` <https://w3id.org/hmo/0.2>, `dcterms:modified` 2026-10-30.
+
+Applied with `tools/fix_swrl_rules.py ontology.ttl ontology.ttl --only F10,F11`.
+All four serialisations are regenerated from the resulting graph. The HTML
+documentation (`index.html`) is not regenerated: it is produced by Widoco.
+
+### Corrections
+
+- **F10, `MQI_SS_IrregularSoftstones` removed**: `IrregularSoftstone` set a unit
+  shape as well as the material, so rubble of soft stone received two shape
+  scores and two values of the index. It now sets the material only, as
+  `IrregularHardstone` does, and the shape is given by its own constant
+  (`RoughlyCutStone`, `RubbleStones`). A pattern that relied on
+  `IrregularSoftstone` alone for its shape must now state the shape.
+
+### Additions
+
+- **F11, `MQI_MM_DryJoints`**: mortar quality score of zero for dry joints,
+  which had no mortar rule, so that masonry with dry joints had no index.
+
 ## 0.2 (2026-10-09) — SWRL rules made executable
 
 Version metadata: `owl:versionInfo` 0.2, `owl:versionIRI` <https://w3id.org/hmo/0.2>,

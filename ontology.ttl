@@ -56,14 +56,14 @@ ns2:isMeasuredIn a owl:DatatypeProperty .
     dcterms:description "Ontology to represent the historic masonry material"@en ;
     dcterms:issued "2024-04-02"^^xsd:date ;
     dcterms:license "https://creativecommons.org/licenses/by/1.0" ;
-    dcterms:modified "2026-10-09"^^xsd:date ;
+    dcterms:modified "2026-10-30"^^xsd:date ;
     dcterms:title "Historic Masonry Ontology"@en ;
     vann:preferredNamespacePrefix "hmo" ;
     vann:preferredNamespaceUri "https://w3id.org/hmo#" ;
-    rdfs:comment "Version 0.2: rules corrected so that a reasoner can execute them; see CHANGELOG.md."@en ;
-    owl:priorVersion <https://w3id.org/hmo/0.1> ;
-    owl:versionIRI <https://w3id.org/hmo/0.2> ;
-    owl:versionInfo "0.2" .
+    rdfs:comment "Version 0.3: IrregularSoftstone sets the unit material only, and dry joints have a mortar score; see CHANGELOG.md."@en ;
+    owl:priorVersion <https://w3id.org/hmo/0.2> ;
+    owl:versionIRI <https://w3id.org/hmo/0.3> ;
+    owl:versionInfo "0.3" .
 
 :BarelyCutStoneMasonry a owl:NamedIndividual,
         :RepresentativeVolumeElement ;
@@ -609,11 +609,6 @@ ns2:isMeasuredIn a owl:DatatypeProperty .
         :LimeMortarJoints,
         :ProperlyStaggeredJoints .
 
-:DryJoints a owl:NamedIndividual,
-        :Joints ;
-    rdfs:label "Dry joints"@en ;
-    rdfs:comment "Dry joints, with no mortar."@en .
-
 :HeadersBondUnits a owl:NamedIndividual,
         :Units ;
     rdfs:label "Headers bond units"@en ;
@@ -632,6 +627,12 @@ ns2:isMeasuredIn a owl:DatatypeProperty .
         :Units ;
     :areDominantPatternEntitiesOf :HollowBrickPattern ;
     :bricksHaveVolumePercentage 0.6 .
+
+:IrregularSoftstone a owl:NamedIndividual,
+        :Units ;
+    rdfs:label "Irregular softstone"@en ;
+    rdfs:comment "Irregular stones made of soft stone, such as tuff or calcarenite."@en ;
+    :areDominantPatternEntitiesOf :IrregularSoftstonePattern .
 
 :IrregularSoftstonePattern a owl:NamedIndividual,
         :Pattern ;
@@ -706,17 +707,16 @@ ns2:isMeasuredIn a owl:DatatypeProperty .
     rdfs:comment "Solid clay bricks."@en ;
     :areDominantPatternEntitiesOf :BricksPattern .
 
+:DryJoints a owl:NamedIndividual,
+        :Joints ;
+    rdfs:label "Dry joints"@en ;
+    rdfs:comment "Dry joints, with no mortar."@en .
+
 :HorizontalJoints a owl:Class ;
     rdfs:label "Horizontal Joints"@en ;
     rdfs:comment "Horizontal spaces between masonry units. Can be either dry or made of mortar."@en ;
     rdfs:subClassOf :Joints ;
     owl:disjointWith :VerticalJoints .
-
-:IrregularSoftstone a owl:NamedIndividual,
-        :Units ;
-    rdfs:label "Irregular softstone"@en ;
-    rdfs:comment "Irregular stones made of soft stone, such as tuff or calcarenite."@en ;
-    :areDominantPatternEntitiesOf :IrregularSoftstonePattern .
 
 :MQITotalInPlane a owl:DatatypeProperty ;
     rdfs:label "Masonry Quality Index total value for in plane loads"@en ;
@@ -830,24 +830,6 @@ ns2:hasValue a owl:DatatypeProperty .
 
 <http://www.semanticweb.org/owl/owlapi/turtle#S> a ns1:Variable .
 
-:MQIMortarQualityInPlane a owl:DatatypeProperty ;
-    rdfs:label "MQI-In Plane-Mortar Quality"@en ;
-    rdfs:comment "Defines the adequacy of the mortar, in the context of in plane loading."@en ;
-    rdfs:domain :MasonryQualityIndex ;
-    rdfs:range xsd:float .
-
-:MQIMortarQualityOutOfPlane a owl:DatatypeProperty ;
-    rdfs:label "MQI-Out Of Plane-Mortar Quality"@en ;
-    rdfs:comment "Defines the adequacy of the mortar, in the context of out of plane loading."@en ;
-    rdfs:domain :MasonryQualityIndex ;
-    rdfs:range xsd:float .
-
-:MQIMortarQualityVert a owl:DatatypeProperty ;
-    rdfs:label "MQI-Vertical-Mortar Quality"@en ;
-    rdfs:comment "Defines the adequacy of the mortar, in the context of vertical loading."@en ;
-    rdfs:domain :MasonryQualityIndex ;
-    rdfs:range xsd:float .
-
 :MQIWallLeavesConnectionsInPlane a owl:DatatypeProperty ;
     rdfs:label "MQI-In Plane-Wall Leaves Connection"@en ;
     rdfs:comment "Defines the adequacy of connections of the adjacent leaves in a wall, in the context of in plane loading."@en ;
@@ -911,6 +893,24 @@ ns2:hasValue a owl:DatatypeProperty .
     rdfs:comment "The configuration of the joints in the pattern."@en ;
     rdfs:subClassOf :PatternEntities ;
     owl:disjointWith :Units .
+
+:MQIMortarQualityInPlane a owl:DatatypeProperty ;
+    rdfs:label "MQI-In Plane-Mortar Quality"@en ;
+    rdfs:comment "Defines the adequacy of the mortar, in the context of in plane loading."@en ;
+    rdfs:domain :MasonryQualityIndex ;
+    rdfs:range xsd:float .
+
+:MQIMortarQualityOutOfPlane a owl:DatatypeProperty ;
+    rdfs:label "MQI-Out Of Plane-Mortar Quality"@en ;
+    rdfs:comment "Defines the adequacy of the mortar, in the context of out of plane loading."@en ;
+    rdfs:domain :MasonryQualityIndex ;
+    rdfs:range xsd:float .
+
+:MQIMortarQualityVert a owl:DatatypeProperty ;
+    rdfs:label "MQI-Vertical-Mortar Quality"@en ;
+    rdfs:comment "Defines the adequacy of the mortar, in the context of vertical loading."@en ;
+    rdfs:domain :MasonryQualityIndex ;
+    rdfs:range xsd:float .
 
 :MQIVerticalJointsInPlane a owl:DatatypeProperty ;
     rdfs:label "MQI-In Plane-Vertical Joints"@en ;
@@ -980,6 +980,24 @@ ns2:hasValue a owl:DatatypeProperty .
         :RepresentativeVolumeElement,
         :Units .
 
+:MQIUnitsShapeInPlane a owl:DatatypeProperty ;
+    rdfs:label "MQI-In Plane-Units Shape"@en ;
+    rdfs:comment "Defines the adequacy of the units shape, in the context of in plane loading."@en ;
+    rdfs:domain :MasonryQualityIndex ;
+    rdfs:range xsd:float .
+
+:MQIUnitsShapeOutOfPlane a owl:DatatypeProperty ;
+    rdfs:label "MQI-Out Of Plane-Units Shape"@en ;
+    rdfs:comment "Defines the adequacy of the units shape, in the context of out of plane loading."@en ;
+    rdfs:domain :MasonryQualityIndex ;
+    rdfs:range xsd:float .
+
+:MQIUnitsShapeVert a owl:DatatypeProperty ;
+    rdfs:label "MQI-Vertical-Units Shape"@en ;
+    rdfs:comment "Defines the adequacy of the units shape, in the context of vertical loading."@en ;
+    rdfs:domain :MasonryQualityIndex ;
+    rdfs:range xsd:float .
+
 :MassDensity a owl:Class ;
     rdfs:label "Mass Density"@en ;
     rdfs:comment "The mass per unit volume of a masonry wall."@en ;
@@ -1005,24 +1023,6 @@ ns2:hasValue a owl:DatatypeProperty .
 :MQIUnitsPropertiesVert a owl:DatatypeProperty ;
     rdfs:label "MQI-Vertical-Units Properties"@en ;
     rdfs:comment "Defines the adequacy of mechanical properties of the units, in the context of vertical loading."@en ;
-    rdfs:domain :MasonryQualityIndex ;
-    rdfs:range xsd:float .
-
-:MQIUnitsShapeInPlane a owl:DatatypeProperty ;
-    rdfs:label "MQI-In Plane-Units Shape"@en ;
-    rdfs:comment "Defines the adequacy of the units shape, in the context of in plane loading."@en ;
-    rdfs:domain :MasonryQualityIndex ;
-    rdfs:range xsd:float .
-
-:MQIUnitsShapeOutOfPlane a owl:DatatypeProperty ;
-    rdfs:label "MQI-Out Of Plane-Units Shape"@en ;
-    rdfs:comment "Defines the adequacy of the units shape, in the context of out of plane loading."@en ;
-    rdfs:domain :MasonryQualityIndex ;
-    rdfs:range xsd:float .
-
-:MQIUnitsShapeVert a owl:DatatypeProperty ;
-    rdfs:label "MQI-Vertical-Units Shape"@en ;
-    rdfs:comment "Defines the adequacy of the units shape, in the context of vertical loading."@en ;
     rdfs:domain :MasonryQualityIndex ;
     rdfs:range xsd:float .
 
@@ -1114,9 +1114,9 @@ ns2:hasValue a owl:DatatypeProperty .
 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> a ns1:Variable .
 
 [] a ns1:Imp ;
-    rdfs:label "MQI_SM_IrregularHardStone" ;
+    rdfs:label "MQI_MM_DryJoints" ;
     ns3:isRuleEnabled true ;
-    rdfs:comment "Unit material score for hard stone that is not squared: the same score as squared hard stone, since the unit material score depends on the material, not on the shape." ;
+    rdfs:comment "Mortar quality score for dry joints: zero, since there is no mortar." ;
     ns1:body ( [ a ns1:IndividualPropertyAtom ;
                 ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
                 ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
@@ -1125,175 +1125,7 @@ ns2:hasValue a owl:DatatypeProperty .
                 ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
                 ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
                 ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:argument2 :IrregularHardstone ;
-                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
-    ns1:head ( [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                ns1:argument2 "1.0"^^xsd:float ;
-                ns1:propertyPredicate :MQIUnitsPropertiesVert ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                ns1:argument2 "1.0"^^xsd:float ;
-                ns1:propertyPredicate :MQIUnitsPropertiesInPlane ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                ns1:argument2 "1.0"^^xsd:float ;
-                ns1:propertyPredicate :MQIUnitsPropertiesOutOfPlane ] ) .
-
-[] a ns1:AtomList .
-
-[] a rdf:List .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] foaf:name "Maria Laura Leonardi" .
-
-[] a rdf:List .
-
-[] a ns1:Imp ;
-    rdfs:label "MQI_SD_PresenceOfMediumUnits" ;
-    ns3:isRuleEnabled true ;
-    rdfs:comment "If a wall has a representative volume element which has a pattern which has a homogeneous pattern entity that are ‘units’, and the average length of the units is greater or equal than ‘20’ and less than ‘40’, then the value of MQI Unit Dimensions is equal to ‘0.5’ for vertical loads, ‘0.5’ for out of plane loads and ‘0.5’ for in plane loads." ;
-    ns1:body ( [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#minVal> ;
-                ns1:propertyPredicate :unitsLengthHasMinimumValue ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ;
-                ns1:propertyPredicate :unitsLengthMaximumValue ] [ a ns1:BuiltinAtom ;
-                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#sum> <http://www.semanticweb.org/owl/owlapi/turtle#minVal> <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ) ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#add> ] [ a ns1:BuiltinAtom ;
-                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#avg> <http://www.semanticweb.org/owl/owlapi/turtle#sum> "2.0"^^xsd:float ) ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#divide> ] [ a ns1:BuiltinAtom ;
-                ns1:arguments [ a rdf:List ;
-                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
-                        rdf:rest [ a rdf:List ;
-                                rdf:first "20.0"^^xsd:float ;
-                                rdf:rest () ] ] ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#greaterThanOrEqual> ] [ a ns1:BuiltinAtom ;
-                ns1:arguments [ a rdf:List ;
-                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
-                        rdf:rest [ a rdf:List ;
-                                rdf:first "40.0"^^xsd:float ;
-                                rdf:rest () ] ] ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#lessThan> ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
-    ns1:head [ a ns1:AtomList ;
-            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                    ns1:argument2 "0.5"^^xsd:float ;
-                    ns1:propertyPredicate :MQIUnitsDimensionsVert ] ;
-            rdf:rest [ a ns1:AtomList ;
-                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                            ns1:argument2 "0.5"^^xsd:float ;
-                            ns1:propertyPredicate :MQIUnitsDimensionsOutOfPlane ] ;
-                    rdf:rest [ a ns1:AtomList ;
-                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                                    ns1:argument2 "0.5"^^xsd:float ;
-                                    ns1:propertyPredicate :MQIUnitsDimensionsInPlane ] ;
-                            rdf:rest () ] ] ] .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a rdf:List .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:Imp ;
-    rdfs:label "MQI_SD_PresenceOfLittleUnits" ;
-    ns3:isRuleEnabled true ;
-    rdfs:comment "If a wall has a representative volume element which has a pattern which has a homogeneous pattern entity that are ‘units’, and the average length of the units is less than ‘20’, then the value of MQI Unit Dimensions is equal to ‘0’ for vertical loads, ‘0’ for out of plane loads and ‘0’ for in plane loads." ;
-    ns1:body ( [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#minVal> ;
-                ns1:propertyPredicate :unitsLengthHasMinimumValue ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ;
-                ns1:propertyPredicate :unitsLengthMaximumValue ] [ a ns1:BuiltinAtom ;
-                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#sum> <http://www.semanticweb.org/owl/owlapi/turtle#minVal> <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ) ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#add> ] [ a ns1:BuiltinAtom ;
-                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#avg> <http://www.semanticweb.org/owl/owlapi/turtle#sum> "2.0"^^xsd:float ) ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#divide> ] [ a ns1:BuiltinAtom ;
-                ns1:arguments [ a rdf:List ;
-                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
-                        rdf:rest [ a rdf:List ;
-                                rdf:first "20.0"^^xsd:float ;
-                                rdf:rest () ] ] ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#lessThan> ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
-    ns1:head [ a ns1:AtomList ;
-            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                    ns1:argument2 "0.0"^^xsd:float ;
-                    ns1:propertyPredicate :MQIUnitsDimensionsVert ] ;
-            rdf:rest [ a ns1:AtomList ;
-                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                            ns1:argument2 "0.0"^^xsd:float ;
-                            ns1:propertyPredicate :MQIUnitsDimensionsOutOfPlane ] ;
-                    rdf:rest [ a ns1:AtomList ;
-                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                                    ns1:argument2 "0.0"^^xsd:float ;
-                                    ns1:propertyPredicate :MQIUnitsDimensionsInPlane ] ;
-                            rdf:rest () ] ] ] .
-
-[] a ns1:Imp ;
-    rdfs:label "MQI_WC_NoHeaders" ;
-    ns3:isRuleEnabled true ;
-    rdfs:comment "Wall leaves connection score when no headers are present and the masonry is not rubble stone." ;
-    ns1:body ( [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:argument2 :NoHeaders ;
+                ns1:argument2 :DryJoints ;
                 ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:IndividualPropertyAtom ;
                 ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
                 ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
@@ -1301,101 +1133,13 @@ ns2:hasValue a owl:DatatypeProperty .
     ns1:head ( [ a ns1:DatavaluedPropertyAtom ;
                 ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
                 ns1:argument2 "0.0"^^xsd:float ;
-                ns1:propertyPredicate :MQIWallLeavesConnectionsVert ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:propertyPredicate :MQIMortarQualityVert ] [ a ns1:DatavaluedPropertyAtom ;
                 ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
                 ns1:argument2 "0.0"^^xsd:float ;
-                ns1:propertyPredicate :MQIWallLeavesConnectionsOutOfPlane ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:propertyPredicate :MQIMortarQualityInPlane ] [ a ns1:DatavaluedPropertyAtom ;
                 ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
                 ns1:argument2 "0.0"^^xsd:float ;
-                ns1:propertyPredicate :MQIWallLeavesConnectionsInPlane ] ) .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a rdf:List .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a rdf:List .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:Imp ;
-    rdfs:label "MQI_SD_PresenceOfLargeUnits" ;
-    ns3:isRuleEnabled true ;
-    rdfs:comment "If a wall has a representative volume element which has a pattern which has a homogeneous pattern entity that are ‘units’, and the average length of the units is greater or equal than ‘40’, then the value of MQI Unit Dimensions is equal to ‘1’ for vertical loads, ‘1’ for out of plane loads and ‘1’ for in plane loads." ;
-    ns1:body ( [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#minVal> ;
-                ns1:propertyPredicate :unitsLengthHasMinimumValue ] [ a ns1:DatavaluedPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ;
-                ns1:propertyPredicate :unitsLengthMaximumValue ] [ a ns1:BuiltinAtom ;
-                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#sum> <http://www.semanticweb.org/owl/owlapi/turtle#minVal> <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ) ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#add> ] [ a ns1:BuiltinAtom ;
-                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#avg> <http://www.semanticweb.org/owl/owlapi/turtle#sum> "2.0"^^xsd:float ) ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#divide> ] [ a ns1:BuiltinAtom ;
-                ns1:arguments [ a rdf:List ;
-                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
-                        rdf:rest [ a rdf:List ;
-                                rdf:first "40.0"^^xsd:float ;
-                                rdf:rest () ] ] ;
-                ns1:builtin <http://www.w3.org/2003/11/swrlb#greaterThanOrEqual> ] [ a ns1:IndividualPropertyAtom ;
-                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
-    ns1:head [ a ns1:AtomList ;
-            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                    ns1:argument2 "1.0"^^xsd:float ;
-                    ns1:propertyPredicate :MQIUnitsDimensionsVert ] ;
-            rdf:rest [ a ns1:AtomList ;
-                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                            ns1:argument2 "1.0"^^xsd:float ;
-                            ns1:propertyPredicate :MQIUnitsDimensionsOutOfPlane ] ;
-                    rdf:rest [ a ns1:AtomList ;
-                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                                    ns1:argument2 "1.0"^^xsd:float ;
-                                    ns1:propertyPredicate :MQIUnitsDimensionsInPlane ] ;
-                            rdf:rest () ] ] ] .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
-
-[] a ns1:AtomList .
+                ns1:propertyPredicate :MQIMortarQualityOutOfPlane ] ) .
 
 [] a rdf:List .
 
@@ -1458,6 +1202,12 @@ ns2:hasValue a owl:DatatypeProperty .
                     ns1:propertyPredicate :MQITotalOutOfPlane ] ;
             rdf:rest () ] .
 
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
+[] foaf:name "Maria Laura Leonardi" .
+
 [] foaf:name "Daniel V. Oliveira" .
 
 [] a ns1:IndividualPropertyAtom ;
@@ -1516,6 +1266,92 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:argument2 "2.0"^^xsd:float ;
                                     ns1:propertyPredicate :MQIUnitsShapeInPlane ] ;
                             rdf:rest () ] ] ] .
+
+[] a rdf:List .
+
+[] a ns1:Imp ;
+    rdfs:label "MQI_SD_PresenceOfMediumUnits" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "If a wall has a representative volume element which has a pattern which has a homogeneous pattern entity that are ‘units’, and the average length of the units is greater or equal than ‘20’ and less than ‘40’, then the value of MQI Unit Dimensions is equal to ‘0.5’ for vertical loads, ‘0.5’ for out of plane loads and ‘0.5’ for in plane loads." ;
+    ns1:body ( [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#minVal> ;
+                ns1:propertyPredicate :unitsLengthHasMinimumValue ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ;
+                ns1:propertyPredicate :unitsLengthMaximumValue ] [ a ns1:BuiltinAtom ;
+                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#sum> <http://www.semanticweb.org/owl/owlapi/turtle#minVal> <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ) ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#add> ] [ a ns1:BuiltinAtom ;
+                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#avg> <http://www.semanticweb.org/owl/owlapi/turtle#sum> "2.0"^^xsd:float ) ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#divide> ] [ a ns1:BuiltinAtom ;
+                ns1:arguments [ a rdf:List ;
+                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
+                        rdf:rest [ a rdf:List ;
+                                rdf:first "20.0"^^xsd:float ;
+                                rdf:rest () ] ] ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#greaterThanOrEqual> ] [ a ns1:BuiltinAtom ;
+                ns1:arguments [ a rdf:List ;
+                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
+                        rdf:rest [ a rdf:List ;
+                                rdf:first "40.0"^^xsd:float ;
+                                rdf:rest () ] ] ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#lessThan> ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                    ns1:argument2 "0.5"^^xsd:float ;
+                    ns1:propertyPredicate :MQIUnitsDimensionsVert ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                            ns1:argument2 "0.5"^^xsd:float ;
+                            ns1:propertyPredicate :MQIUnitsDimensionsOutOfPlane ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                                    ns1:argument2 "0.5"^^xsd:float ;
+                                    ns1:propertyPredicate :MQIUnitsDimensionsInPlane ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "MQI_SM_IrregularHardStone" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "Unit material score for hard stone that is not squared: the same score as squared hard stone, since the unit material score depends on the material, not on the shape." ;
+    ns1:body ( [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:argument2 :IrregularHardstone ;
+                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
+    ns1:head ( [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:argument2 "1.0"^^xsd:float ;
+                ns1:propertyPredicate :MQIUnitsPropertiesVert ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:argument2 "1.0"^^xsd:float ;
+                ns1:propertyPredicate :MQIUnitsPropertiesInPlane ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:argument2 "1.0"^^xsd:float ;
+                ns1:propertyPredicate :MQIUnitsPropertiesOutOfPlane ] ) .
 
 [] a ns1:AtomList .
 
@@ -1757,6 +1593,34 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:argument2 "0.0"^^xsd:float ;
                                     ns1:propertyPredicate :MQIMortarQualityOutOfPlane ] ;
                             rdf:rest () ] ] ] .
+
+[] a ns1:Imp ;
+    rdfs:label "MQI_WC_NoHeaders" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "Wall leaves connection score when no headers are present and the masonry is not rubble stone." ;
+    ns1:body ( [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:argument2 :NoHeaders ;
+                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
+    ns1:head ( [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:argument2 "0.0"^^xsd:float ;
+                ns1:propertyPredicate :MQIWallLeavesConnectionsVert ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:argument2 "0.0"^^xsd:float ;
+                ns1:propertyPredicate :MQIWallLeavesConnectionsOutOfPlane ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:argument2 "0.0"^^xsd:float ;
+                ns1:propertyPredicate :MQIWallLeavesConnectionsInPlane ] ) .
 
 [] a rdf:List .
 
@@ -2072,48 +1936,6 @@ ns2:hasValue a owl:DatatypeProperty .
 
 [] a rdf:List .
 
-[] a ns1:Imp ;
-    rdfs:label "MQI_SS_IrregularSoftstones" ;
-    ns3:isRuleEnabled true ;
-    rdfs:comment "If a wall has a representative volume element which has a pattern which has a homogeneous pattern entity that is ‘roughly cut stones, then the value of MQI Unit Shape is equal to ‘1.5’ for vertical loads, ‘1’ for out of plane loads and ‘1’ for in plane loads." ;
-    ns1:body [ a ns1:AtomList ;
-            rdf:first [ a ns1:IndividualPropertyAtom ;
-                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                    ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                    ns1:propertyPredicate :hasRepresentativeVolumeElement ] ;
-            rdf:rest [ a ns1:AtomList ;
-                    rdf:first [ a ns1:IndividualPropertyAtom ;
-                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
-                            ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                            ns1:propertyPredicate :hasPattern ] ;
-                    rdf:rest [ a ns1:AtomList ;
-                            rdf:first [ a ns1:IndividualPropertyAtom ;
-                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
-                                    ns1:argument2 :IrregularSoftstone ;
-                                    ns1:propertyPredicate :hasDominantPatternEntities ] ;
-                            rdf:rest [ a ns1:AtomList ;
-                                    rdf:first [ a ns1:IndividualPropertyAtom ;
-                                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
-                                            ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                                            ns1:propertyPredicate :hasMasonryQualityIndex ] ;
-                                    rdf:rest () ] ] ] ] ;
-    ns1:head [ a ns1:AtomList ;
-            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                    ns1:argument2 "1.5"^^xsd:float ;
-                    ns1:propertyPredicate :MQIUnitsShapeVert ] ;
-            rdf:rest [ a ns1:AtomList ;
-                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                            ns1:argument2 "1.0"^^xsd:float ;
-                            ns1:propertyPredicate :MQIUnitsShapeOutOfPlane ] ;
-                    rdf:rest [ a ns1:AtomList ;
-                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
-                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
-                                    ns1:argument2 "1.0"^^xsd:float ;
-                                    ns1:propertyPredicate :MQIUnitsShapeInPlane ] ;
-                            rdf:rest () ] ] ] .
-
 [] a rdf:List .
 
 [] a ns1:Imp ;
@@ -2149,6 +1971,10 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:argument2 "0.5"^^xsd:float ;
                                     ns1:propertyPredicate :MQIMortarQualityOutOfPlane ] ;
                             rdf:rest () ] ] ] .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
 
 [] a ns1:AtomList .
 
@@ -2200,6 +2026,10 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:propertyPredicate :MQIHorizontalJointsInPlane ] ;
                             rdf:rest () ] ] ] .
 
+[] a rdf:List .
+
+[] a ns1:AtomList .
+
 [] foaf:name "Elena Gigliarelli" .
 
 [] a ns1:AtomList .
@@ -2246,7 +2076,11 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:propertyPredicate :MQIHorizontalJointsInPlane ] ;
                             rdf:rest () ] ] ] .
 
+[] a ns1:AtomList .
+
 [] a rdf:List .
+
+[] a ns1:AtomList .
 
 [] a ns1:Imp ;
     rdfs:label "MQI_VJ_PartiallyStaggeredJoints" ;
@@ -2282,6 +2116,8 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:propertyPredicate :MQIVerticalJointsOutOfPlane ] ;
                             rdf:rest () ] ] ] .
 
+[] a ns1:AtomList .
+
 [] a rdf:List .
 
 [] a ns1:AtomList .
@@ -2289,6 +2125,8 @@ ns2:hasValue a owl:DatatypeProperty .
 [] a ns1:AtomList .
 
 [] a ns1:AtomList .
+
+[] a rdf:List .
 
 [] a rdf:List .
 
@@ -2355,6 +2193,66 @@ ns2:hasValue a owl:DatatypeProperty .
 
 [] a ns1:AtomList .
 
+[] a ns1:Imp ;
+    rdfs:label "MQI_SD_PresenceOfLargeUnits" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "If a wall has a representative volume element which has a pattern which has a homogeneous pattern entity that are ‘units’, and the average length of the units is greater or equal than ‘40’, then the value of MQI Unit Dimensions is equal to ‘1’ for vertical loads, ‘1’ for out of plane loads and ‘1’ for in plane loads." ;
+    ns1:body ( [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#minVal> ;
+                ns1:propertyPredicate :unitsLengthHasMinimumValue ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ;
+                ns1:propertyPredicate :unitsLengthMaximumValue ] [ a ns1:BuiltinAtom ;
+                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#sum> <http://www.semanticweb.org/owl/owlapi/turtle#minVal> <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ) ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#add> ] [ a ns1:BuiltinAtom ;
+                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#avg> <http://www.semanticweb.org/owl/owlapi/turtle#sum> "2.0"^^xsd:float ) ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#divide> ] [ a ns1:BuiltinAtom ;
+                ns1:arguments [ a rdf:List ;
+                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
+                        rdf:rest [ a rdf:List ;
+                                rdf:first "40.0"^^xsd:float ;
+                                rdf:rest () ] ] ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#greaterThanOrEqual> ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                    ns1:argument2 "1.0"^^xsd:float ;
+                    ns1:propertyPredicate :MQIUnitsDimensionsVert ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                            ns1:argument2 "1.0"^^xsd:float ;
+                            ns1:propertyPredicate :MQIUnitsDimensionsOutOfPlane ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                                    ns1:argument2 "1.0"^^xsd:float ;
+                                    ns1:propertyPredicate :MQIUnitsDimensionsInPlane ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
 [] a ns1:AtomList .
 
 [] a ns1:AtomList .
@@ -2405,6 +2303,10 @@ ns2:hasValue a owl:DatatypeProperty .
 
 [] a ns1:AtomList .
 
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
 [] a rdf:List .
 
 [] a ns1:Imp ;
@@ -2441,9 +2343,13 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:propertyPredicate :MQIMortarQualityOutOfPlane ] ;
                             rdf:rest () ] ] ] .
 
+[] a rdf:List .
+
 [] a ns1:AtomList .
 
 [] a rdf:List .
+
+[] a ns1:AtomList .
 
 [] a ns1:AtomList .
 
@@ -2487,6 +2393,12 @@ ns2:hasValue a owl:DatatypeProperty .
                     ns1:propertyPredicate ns2:hasValue ] ;
             rdf:rest () ] .
 
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
 [] a rdf:List .
 
 [] a ns1:Imp ;
@@ -2524,6 +2436,58 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
                                     ns1:argument2 "0.5"^^xsd:float ;
                                     ns1:propertyPredicate :MQIUnitsPropertiesOutOfPlane ] ;
+                            rdf:rest () ] ] ] .
+
+[] a ns1:AtomList .
+
+[] a ns1:Imp ;
+    rdfs:label "MQI_SD_PresenceOfLittleUnits" ;
+    ns3:isRuleEnabled true ;
+    rdfs:comment "If a wall has a representative volume element which has a pattern which has a homogeneous pattern entity that are ‘units’, and the average length of the units is less than ‘20’, then the value of MQI Unit Dimensions is equal to ‘0’ for vertical loads, ‘0’ for out of plane loads and ‘0’ for in plane loads." ;
+    ns1:body ( [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:propertyPredicate :hasRepresentativeVolumeElement ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#RpV> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:propertyPredicate :hasPattern ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#Pttr> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:propertyPredicate :hasDominantPatternEntities ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#minVal> ;
+                ns1:propertyPredicate :unitsLengthHasMinimumValue ] [ a ns1:DatavaluedPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#unt> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ;
+                ns1:propertyPredicate :unitsLengthMaximumValue ] [ a ns1:BuiltinAtom ;
+                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#sum> <http://www.semanticweb.org/owl/owlapi/turtle#minVal> <http://www.semanticweb.org/owl/owlapi/turtle#maxVal> ) ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#add> ] [ a ns1:BuiltinAtom ;
+                ns1:arguments ( <http://www.semanticweb.org/owl/owlapi/turtle#avg> <http://www.semanticweb.org/owl/owlapi/turtle#sum> "2.0"^^xsd:float ) ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#divide> ] [ a ns1:BuiltinAtom ;
+                ns1:arguments [ a rdf:List ;
+                        rdf:first <http://www.semanticweb.org/owl/owlapi/turtle#avg> ;
+                        rdf:rest [ a rdf:List ;
+                                rdf:first "20.0"^^xsd:float ;
+                                rdf:rest () ] ] ;
+                ns1:builtin <http://www.w3.org/2003/11/swrlb#lessThan> ] [ a ns1:IndividualPropertyAtom ;
+                ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#wl> ;
+                ns1:argument2 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                ns1:propertyPredicate :hasMasonryQualityIndex ] ) ;
+    ns1:head [ a ns1:AtomList ;
+            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                    ns1:argument2 "0.0"^^xsd:float ;
+                    ns1:propertyPredicate :MQIUnitsDimensionsVert ] ;
+            rdf:rest [ a ns1:AtomList ;
+                    rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                            ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                            ns1:argument2 "0.0"^^xsd:float ;
+                            ns1:propertyPredicate :MQIUnitsDimensionsOutOfPlane ] ;
+                    rdf:rest [ a ns1:AtomList ;
+                            rdf:first [ a ns1:DatavaluedPropertyAtom ;
+                                    ns1:argument1 <http://www.semanticweb.org/owl/owlapi/turtle#MQI> ;
+                                    ns1:argument2 "0.0"^^xsd:float ;
+                                    ns1:propertyPredicate :MQIUnitsDimensionsInPlane ] ;
                             rdf:rest () ] ] ] .
 
 [] a ns1:AtomList .
@@ -2918,6 +2882,10 @@ ns2:hasValue a owl:DatatypeProperty .
 
 [] a ns1:AtomList .
 
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
 [] a ns1:Imp ;
     rdfs:label "MQI_WC_RubbleStones" ;
     ns3:isRuleEnabled true ;
@@ -2962,6 +2930,8 @@ ns2:hasValue a owl:DatatypeProperty .
 
 [] a ns1:AtomList .
 
+[] a ns1:AtomList .
+
 [] a ns1:Imp ;
     rdfs:label "MQI_SM_SquaredHardStone" ;
     ns3:isRuleEnabled true ;
@@ -2995,6 +2965,10 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:argument2 "1.0"^^xsd:float ;
                                     ns1:propertyPredicate :MQIUnitsPropertiesOutOfPlane ] ;
                             rdf:rest () ] ] ] .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
 
 [] a ns1:AtomList .
 
@@ -3051,6 +3025,10 @@ ns2:hasValue a owl:DatatypeProperty .
 
 [] a ns1:AtomList .
 
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
 [] a ns1:Imp ;
     rdfs:label "MQI_SS_SquaredSoftStone" ;
     ns3:isRuleEnabled true ;
@@ -3092,6 +3070,8 @@ ns2:hasValue a owl:DatatypeProperty .
                                     ns1:argument2 "2.0"^^xsd:float ;
                                     ns1:propertyPredicate :MQIUnitsShapeInPlane ] ;
                             rdf:rest () ] ] ] .
+
+[] a ns1:AtomList .
 
 [] a ns1:AtomList .
 
@@ -3138,6 +3118,12 @@ ns2:hasValue a owl:DatatypeProperty .
 [] a ns1:AtomList .
 
 [] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
+[] a ns1:AtomList .
+
+[] a rdf:List .
 
 [] a rdf:List .
 
